@@ -14,7 +14,11 @@ class OccupancyGridMap:
         """
 
         self.data = data_array
-        self.dim_cells = data_array.shape
+
+        self.dim_cells = ()
+        self.dim_cells = (data_array.shape[1], data_array.shape[0]) 
+        
+
         self.dim_meters = (self.dim_cells[0] * cell_size, self.dim_cells[1] * cell_size)
         self.cell_size = cell_size
         self.occupancy_threshold = occupancy_threshold
@@ -30,7 +34,7 @@ class OccupancyGridMap:
         if x_index < 0 or y_index < 0 or x_index >= self.dim_cells[0] or y_index >= self.dim_cells[1]:
             raise Exception('Point is outside map boundary')
 
-        self.visited[y_index][x_index] = 1.0
+        self.visited[x_index][y_index] = 1.0
 
     def mark_visited(self, point):
         """
@@ -52,7 +56,7 @@ class OccupancyGridMap:
         if x_index < 0 or y_index < 0 or x_index >= self.dim_cells[0] or y_index >= self.dim_cells[1]:
             raise Exception('Point is outside map boundary')
 
-        if self.visited[y_index][x_index] == 1.0:
+        if self.visited[x_index][y_index] == 1.0:
             return True
         else:
             return False
@@ -76,6 +80,9 @@ class OccupancyGridMap:
         """
         x_index, y_index = point_idx
         if x_index < 0 or y_index < 0 or x_index >= self.dim_cells[0] or y_index >= self.dim_cells[1]:
+            print('dim_cells=')
+            print(self.dim_cells)
+            print('\ngoal_node=(%f,%f)'%(x_index,y_index))
             raise Exception('Point is outside map boundary')
 
         return self.data[y_index][x_index]
