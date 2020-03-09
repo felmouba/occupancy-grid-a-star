@@ -1,5 +1,13 @@
-from gridmap import OccupancyGridMap
+#!/localdisk/python3-venv/bin/python
+import os
+import sys
 import matplotlib.pyplot as plt
+
+parent_folder = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..')
+if parent_folder not in sys.path:
+    sys.path.append(parent_folder)
+
+from gridmap import OccupancyGridMap
 from a_star import a_star
 from utils import plot_path
 
